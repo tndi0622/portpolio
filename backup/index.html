@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lee Kwang Soo | Portfolio</title>
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header id="home">
+    <div class="hero-content">
+      <h1>Hello, I'm <span class="highlight">Lee Kwang Soo</span></h1>
+      <p class="typing-text">Web Developer | UI/UX Designer</p>
+      <a href="#projects" class="btn-hero">View My Work</a>
+    </div>
+    <div class="scroll-down">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </header>
+  <section id="projects" class="fade-in">
+    <h2 class="title">My Projects</h2>
+    <div class="projects">
+      <div class="project-card">
+        <div class="card-image">
+          <img src="img/project1.png" alt="반응형 웹 프로젝트" />
+          <div class="overlay">
+            <a href="https://tndi0622.github.io/Responsible_web/" target="_blank" class="btn-icon"><i
+                class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>Game Info Site</h3>
+          <p>반응형 웹 디자인을 적용한 게임 정보 제공 사이트입니다.</p>
+          <div class="tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="card-image">
+          <img src="img/project2.png" alt="서버 프로그램 구현" />
+          <div class="overlay">
+            <a href="https://random.dothome.co.kr/server/index.php" target="_blank" class="btn-icon"><i
+                class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>Horoscope Site</h3>
+          <p>PHP와 MySQL을 활용한 별자리 운세 확인 웹 애플리케이션입니다.</p>
+          <div class="tags">
+            <span>PHP</span><span>MySQL</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="card-image">
+          <img src="img/project3.png" alt="UI 구현 프로젝트" />
+          <div class="overlay">
+            <a href="#" class="btn-icon"><i class="fas fa-code"></i></a>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>Pet Rescue Info</h3>
+          <p>유기동물 정보를 쉽게 조회할 수 있는 플랫폼 (개발 중).</p>
+          <div class="tags">
+            <span>React</span><span>Figma</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="skills" class="fade-in">
+    <h2 class="title">Tech Skills</h2>
+    <div class="skills-container">
+      <div class="skill-item">
+        <i class="fab fa-html5 skill-icon html"></i>
+        <span>HTML5</span>
+      </div>
+      <div class="skill-item">
+        <i class="fab fa-css3-alt skill-icon css"></i>
+        <span>CSS3</span>
+      </div>
+      <div class="skill-item">
+        <i class="fab fa-js skill-icon js"></i>
+        <span>JavaScript</span>
+      </div>
+      <div class="skill-item">
+        <i class="fab fa-react skill-icon react"></i>
+        <span>React</span>
+      </div>
+      <div class="skill-item">
+        <i class="fab fa-php skill-icon php"></i>
+        <span>PHP</span>
+      </div>
+      <div class="skill-item">
+        <i class="fab fa-figma skill-icon figma"></i>
+        <span>Figma</span>
+      </div>
+    </div>
+  </section>
+  <section id="about" class="fade-in">
+    <h2 class="title">About Me</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          안녕하세요! 끊임없이 성장하는 <strong>웹 개발자 이광수</strong>입니다.<br />
+          사용자에게 편리하고 즐거운 경험을 제공하는 웹 사이트를 만드는 것에 열정을 가지고 있습니다.<br />
+          새로운 기술을 배우는 것을 두려워하지 않고, 항상 도전하는 자세로 임하겠습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Lee Gwang Su</h3>
+        <p>Creating digital experiences that matter.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p><i class="fas fa-envelope"></i> tndi0622@naver.com</p>
+        <p><i class="fas fa-phone"></i> 010-XXXX-XXXX</p>
+      </div>
+      <div class="footer-section">
+        <h3>Social</h3>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fas fa-blog"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Lee Gwang Su. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll Animation using Intersection Observer
+    document.addEventListener("DOMContentLoaded", () => {
+      const faders = document.querySelectorAll('.fade-in');
+      const appearOptions = {
+        threshold: 0.2, // 20% of the element is visible
+        rootMargin: "0px 0px -50px 0px"
+      };
+
+      const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            return;
+          } else {
+            entry.target.classList.add('appear');
+            appearOnScroll.unobserve(entry.target);
+          }
+        });
+      }, appearOptions);
+
+      faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+      });
+    });
+  </script>
+</body>
+
+</html>
