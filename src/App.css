@@ -1,16 +1,16 @@
 /* CSS Variables */
 :root {
-  --primary-color: #00d2ff;
-  --secondary-color: #3a7bd5;
-  --bg-color: #121212;
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --text-main: #ffffff;
-  --text-secondary: #a0a0a0;
-  --font-family: 'Poppins', sans-serif;
-  --transition-speed: 0.3s;
+  --primary: #64ffda;
+  --secondary: #8892b0;
+  --bg-dark: #0a192f;
+  --bg-card: #112240;
+  --text-main: #ccd6f6;
+  --text-muted: #8892b0;
+  --font-main: 'Poppins', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', monospace;
+  --ease: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* Reset & Basic Setup */
 * {
   margin: 0;
   padding: 0;
@@ -22,127 +22,252 @@ html {
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
+  background-color: var(--bg-dark);
   color: var(--text-main);
+  font-family: var(--font-main);
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  transition: all 0.25s var(--ease);
+}
+
+a:hover {
+  color: var(--primary);
 }
 
 ul {
   list-style: none;
 }
 
-/* Header / Hero Section */
-header {
-  position: relative;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-card);
+  border-radius: 5px;
+  border: 2px solid var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
   width: 100%;
+  height: 80px;
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+}
+
+.logo a {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.logo a:hover {
+  background: rgba(100, 255, 218, 0.1);
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  counter-reset: item 0;
+}
+
+.nav-links li a {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.nav-links li a:hover {
+  color: var(--primary);
+}
+
+.nav-links li a::before {
+  counter-increment: item 1;
+  content: "0" counter(item) ".";
+  margin-right: 5px;
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+/* Mobile Nav Toggle (Simplified for now) */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 25px;
+    height: 70px;
+  }
+
+  .nav-links {
+    display: none;
+    /* Hide on mobile for cleanliness unless hamburger is added */
+  }
+}
+
+/* Hero Section */
+header {
   height: 100vh;
-  /* Use /img/header.jpg for Vite public path */
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/header.jpg") no-repeat center/cover;
-  background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  color: white;
+  padding: 0 100px;
+  /* Aligns with extensive max-width */
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .hero-content h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
+  font-size: clamp(40px, 8vw, 80px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-main);
 }
 
 .hero-content .highlight {
-  color: var(--primary-color);
-  background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--primary);
+  display: block;
+  /* Make it block or inline-block if needed, but keeping inline usually better */
 }
 
-.hero-content p {
-  font-size: 1.5rem;
-  margin-bottom: 40px;
-  color: var(--text-secondary);
+.typing-text {
+  font-family: var(--font-mono);
+  color: var(--primary);
+  font-size: clamp(14px, 3vw, 18px);
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+.hero-desc {
+  color: var(--text-muted);
+  max-width: 540px;
+  font-size: 1.1rem;
+  margin-bottom: 50px;
 }
 
 .btn-hero {
-  padding: 15px 40px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border-radius: 30px;
-  font-weight: 600;
-  font-size: 1rem;
-  display: inline-block;
-  /* Framer Motion handles transition but fallback here is ok/removed to avoid conflict */
+  color: var(--primary);
+  background-color: transparent;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  padding: 1.25rem 1.75rem;
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
 }
 
-/* Scroll down icon animation is handled by Framer Motion in JSX now, 
-   but we keep basic style just in case of non-js render? */
+.btn-hero:hover {
+  background-color: rgba(100, 255, 218, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+}
+
 .scroll-down {
   position: absolute;
-  bottom: 30px;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--primary);
   font-size: 2rem;
-  color: var(--text-secondary);
-  cursor: pointer;
 }
 
-/* Sections General */
+/* Shared Section Styles */
 section {
-  padding: 100px 20px;
+  padding: 100px 100px;
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 60px;
-  position: relative;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: clamp(26px, 5vw, 32px);
+  font-weight: 700;
+  color: var(--text-main);
 }
+
+.title::before {
+  content: "0" counter(section) ".";
+  /* Requires section counter setup in body/app */
+  margin-right: 15px;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 400;
+  position: relative;
+  bottom: 2px;
+}
+
+/* Manual fix since CSS counters across elements can be tricky without a wrapper */
+/* We will remove the CSS counter here and assume hardcoded visual or JS numbering for simplicity if consistent */
+.title::before {
+  content: ">>";
+  /* Or just keep it simple */
+  content: "";
+  /* Reset */
+}
+
+/* Re-applying visual numbering via modifier classes or manual spans is safer in React usually, but let's stick to the decorative line for now */
 
 .title::after {
-  content: '';
-  width: 80px;
-  height: 4px;
-  background: var(--primary-color);
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 2px;
+  content: "";
+  display: block;
+  width: 300px;
+  height: 1px;
+  background-color: var(--bg-card);
+  margin-left: 20px;
 }
 
-/* Projects Section */
+/* Projects Grid */
 .projects {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
 }
 
 .project-card {
-  background: var(--card-bg);
-  border-radius: 15px;
+  background-color: var(--bg-card);
+  border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  transition: transform 0.2s var(--ease);
 }
 
 .project-card:hover {
-  border-color: var(--primary-color);
+  transform: translateY(-7px);
 }
 
 .card-image {
-  position: relative;
   height: 200px;
+  background: #1a1a1a;
+  /* Fallback */
   overflow: hidden;
 }
 
@@ -150,46 +275,12 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s;
+  opacity: 0.7;
+  transition: opacity 0.3s var(--ease);
 }
 
-.project-card:hover .card-image img {
-  transform: scale(1.1);
-}
-
-.card-image .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity var(--transition-speed);
-}
-
-.project-card:hover .overlay {
+.project-card:hover img {
   opacity: 1;
-}
-
-.btn-icon {
-  font-size: 1.5rem;
-  color: white;
-  background: var(--primary-color);
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  transition: transform 0.3s;
-}
-
-.btn-icon:hover {
-  transform: scale(1.1) rotate(90deg);
 }
 
 .card-content {
@@ -197,208 +288,206 @@ section {
 }
 
 .card-content h3 {
-  font-size: 1.5rem;
   margin-bottom: 10px;
+  color: var(--text-main);
+  font-size: 1.4rem;
 }
 
 .card-content p {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
+  font-size: 1rem;
   margin-bottom: 20px;
 }
 
 .tags {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .tags span {
+  font-family: var(--font-mono);
   font-size: 0.8rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: var(--primary-color);
+  color: var(--primary);
 }
 
-/* Skills Section */
+/* Skills */
 .skills-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 20px;
 }
 
 .skill-item {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 12px;
-  width: 150px;
+  background: var(--bg-card);
+  padding: 25px 20px;
+  border-radius: 4px;
+  text-align: center;
+  transition: all 0.25s var(--ease);
+  cursor: default;
+  border: 1px solid transparent;
+  /* Prepare for border transition */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  /* Hover effects handled by Framer Motion largely, but keeping CSS fallback */
+  justify-content: center;
+  height: 100%;
 }
 
 .skill-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+  background: lighten(var(--bg-card), 5%);
+  /* Slightly lighter on hover */
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
 }
 
 .skill-icon {
   font-size: 3rem;
+  margin-bottom: 15px;
+  transition: transform 0.25s var(--ease);
+  /* Icons start with their specific colors below */
 }
 
-/* Icon Colors */
+.skill-item span {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: color 0.25s;
+}
+
+.skill-item:hover span {
+  color: var(--text-main);
+}
+
+.skill-item:hover .skill-icon {
+  transform: scale(1.1);
+}
+
+/* Specific Brand Colors */
+/* HTML5 */
+.skill-item:has(.html) {
+  /* Fallback or specific class if :has not supported fully (modern browsers do now) */
+}
+
+.skill-item:hover:has(.html),
+.skill-item:hover:has(.html) {
+  border-color: #e34c26;
+}
+
 .skill-icon.html {
   color: #e34c26;
+}
+
+/* CSS3 */
+.skill-item:hover:has(.css) {
+  border-color: #264de4;
 }
 
 .skill-icon.css {
   color: #264de4;
 }
 
+/* JS */
+.skill-item:hover:has(.js) {
+  border-color: #f7df1e;
+}
+
 .skill-icon.js {
   color: #f7df1e;
+}
+
+/* React */
+.skill-item:hover:has(.react) {
+  border-color: #61dbfb;
 }
 
 .skill-icon.react {
   color: #61dbfb;
 }
 
+/* PHP */
+.skill-item:hover:has(.php) {
+  border-color: #8993be;
+}
+
 .skill-icon.php {
   color: #8993be;
+}
+
+/* Figma */
+.skill-item:hover:has(.figma) {
+  border-color: #f24e1e;
 }
 
 .skill-icon.figma {
   color: #f24e1e;
 }
 
-/* About / Info Section */
-#about {
-  text-align: center;
-}
 
+/* About Link */
 .about-content {
-  background: var(--card-bg);
-  padding: 40px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  max-width: 800px;
-  margin: auto;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 50px;
 }
 
 .about-text p {
+  margin-bottom: 15px;
+  color: var(--text-muted);
   font-size: 1.1rem;
-  color: var(--text-secondary);
 }
 
 .about-text strong {
-  color: var(--primary-color);
+  color: var(--primary);
 }
 
 /* Footer */
 footer {
-  background: #0a0a0a;
-  padding: 60px 20px 20px;
-  margin-top: 50px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 50px;
+  text-align: center;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
 }
 
-.footer-content {
+.social-links {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 40px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-}
-
-.footer-section h3 {
-  font-size: 1.3rem;
+  justify-content: center;
+  gap: 30px;
   margin-bottom: 20px;
-  color: white;
-}
-
-.footer-section p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.footer-section svg {
-  color: var(--primary-color);
 }
 
 .social-links a {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  margin-right: 10px;
-  transition: 0.3s;
-  color: white;
+  font-size: 1.4rem;
 }
 
 .social-links a:hover {
-  background: var(--primary-color);
+  color: var(--primary);
   transform: translateY(-3px);
 }
 
-.footer-bottom {
-  text-align: center;
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  color: #666;
-  font-size: 0.85rem;
-}
-
-/* Responsive Media Queries */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
+
+  header,
+  section {
+    padding: 80px 25px;
+  }
+
   .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: 50px;
   }
 
-  .hero-content p {
-    font-size: 1.1rem;
+  .about-content {
+    grid-template-columns: 1fr;
   }
 
-  .title {
-    font-size: 2rem;
+  .title::after {
+    width: 100px;
+    /* shorter line on mobile */
   }
 
-  .skills-container {
-    gap: 15px;
-  }
-
-  .skill-item {
-    width: 45%;
-    padding: 20px;
-  }
-
-  .footer-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-section {
-    min-width: 100%;
-  }
-
-  .footer-section p {
-    justify-content: center;
+  .projects {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }

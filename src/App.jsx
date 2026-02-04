@@ -42,6 +42,19 @@ function App() {
 
   return (
     <div className="app">
+      {/* Navigation Bar */}
+      <nav className="navbar">
+        <div className="logo">
+          <a href="#home">LGS</a>
+        </div>
+        <ul className="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Work</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
       {/* Header / Hero Section */}
       <header id="home">
         <div className="hero-content">
@@ -231,28 +244,14 @@ function App() {
 
       {/* Footer */}
       <footer>
-        <div className="footer-content">
-          <div className="footer-section">
-            <h3>Lee Gwang Su</h3>
-            <p>Creating digital experiences that matter.</p>
-          </div>
-          <div className="footer-section">
-            <h3>Contact</h3>
-            <p><FaEnvelope /> tndi0622@naver.com</p>
-            <p><FaPhone /> 010-7979-4510</p>
-          </div>
-          <div className="footer-section">
-            <h3>Social</h3>
-            <div className="social-links">
-              <a href="https://github.com/tndi0622?tab=repositories"><FaGithub /></a>
-              <a href="#"><FaBlog /></a>
-              <a href="#"><FaInstagram /></a>
-            </div>
-          </div>
+        <div className="social-links">
+          <a href="https://github.com/tndi0622?tab=repositories" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+          <a href="mailto:tndi0622@naver.com"><FaEnvelope /></a>
+          <a href="#"><FaBlog /></a>
+          <a href="#"><FaInstagram /></a>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; 2026 Lee Gwang Su. All Rights Reserved.</p>
-        </div>
+        <p>Built by Lee Gwang Su.</p>
+        <p>&copy; 2026 All Rights Reserved.</p>
       </footer>
     </div>
   );
