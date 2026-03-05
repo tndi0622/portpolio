@@ -186,9 +186,14 @@ function App() {
                 className="skill-report-item"
                 key={idx}
                 drag
-                dragConstraints={constraintsRef}
+                dragMomentum={true}
+                dragElastic={0.5}
                 whileDrag={{ scale: 1.1, zIndex: 100 }}
-                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+                dragTransition={{
+                  power: 0.2,
+                  timeConstant: 200,
+                  modifyTarget: target => target // No snapping
+                }}
                 style={{ cursor: 'grab' }}
               >
                 <div className="skill-report-icon" style={{ color: skill.color }}>
@@ -257,9 +262,13 @@ function App() {
                 className="project-page-card"
                 key={idx}
                 drag
-                dragConstraints={workConstraintsRef}
+                dragMomentum={true}
+                dragElastic={0.5}
                 whileDrag={{ scale: 1.02, zIndex: 100 }}
-                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+                dragTransition={{
+                  power: 0.3,
+                  timeConstant: 300
+                }}
                 style={{ cursor: 'grab' }}
               >
                 <div className="project-visual">
