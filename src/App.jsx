@@ -28,11 +28,14 @@ function App() {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [resetKey, setResetKey] = useState(0);
+  const [hasMoved, setHasMoved] = useState(false);
+  const [showCard, setShowCard] = useState(false);
   const totalPages = pages.length;
   const mainRef = useRef(null);
 
   const handleReset = () => {
     setResetKey(prev => prev + 1);
+    setHasMoved(false);
   };
 
   // Handle keyboard navigation
@@ -82,10 +85,23 @@ function App() {
 
   return (
     <div className="dossier-container" ref={mainRef}>
-      {/* Reset Button */}
-      <button className="reset-btn" onClick={handleReset} title="Reset Layout">
-        <FaUndo /> <span>RESET CARDS</span>
-      </button>
+      {/* Reset Button - Conditional Rendering with Animation */}
+      <AnimatePresence>
+        {hasMoved && (
+          <motion.button
+            className="reset-btn"
+            onClick={handleReset}
+            title="Reset Layout"
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.8 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FaUndo /> <span>RESET CARDS</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Index Tabs */}
       <div className="index-tabs">
@@ -108,47 +124,50 @@ function App() {
           style={getPageStyle(0)}
         >
           <div className="page-header">
-            <span className="page-label">FILE NO. 001 / PERSONNEL</span>
-            <div className="dossier-stamp">APPROVED</div>
+            <span className="page-label">FILE NO. 001 </span>
           </div>
           <div className="cover-content">
             <div className="cover-text">
-              <motion.h1
-                className="page-title"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                HELLO,<br />
-                I'M <span style={{ color: 'var(--accent)' }}>LEE GWANG SU</span>
-              </motion.h1>
-              <motion.p
-                className="typing-text"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                Creative Web Developer & UI/UX Designer
-              </motion.p>
-              <div style={{ marginTop: '40px' }}>
+              <div className="profile-intro-info" style={{ marginTop: '30px' }}>
+                <div className="intro-badge">
+                  <span className="badge-label">NAME</span>
+                  <span className="badge-value">이광수</span>
+                </div>
+                <div className="intro-badge">
+                  <span className="badge-label">AGE</span>
+                  <span className="badge-value">25 (2001)</span>
+                </div>
+              </div>
+              <div style={{ marginTop: '30px' }}>
                 <p style={{ color: 'var(--text-muted)', maxWidth: '450px', lineHeight: '1.8' }}>
-                  안녕하세요! 끊임없이 성장하는 웹 개발자 이광수입니다.
+                  안녕하세요! 끊임없이 성장하는 웹 개발자 이광수입니다. <br />
                   사용자에게 편리하고 즐거운 경험을 제공하는 웹 사이트를 만드는 것에 열정을 가지고 있습니다.
-                  새로운 기술을 배우는 것을 두려워하지 않고, 항상 도전하는 자세로 임하겠습니다.
                 </p>
               </div>
             </div>
-            <div className="cover-image-area">
-              <motion.div
-                className="hero-image-placeholder"
-                animate={{
-                  scale: [1, 1.05, 1],
-                  rotate: [0, 2, 0]
-                }}
-                transition={{ duration: 6, repeat: Infinity }}
-              >
-                <FaCode size={120} color="var(--primary)" style={{ opacity: 0.2 }} />
-              </motion.div>
+            <div className="timeline-area">
+              <div className="timeline-container">
+                <div className="timeline-stem"></div>
+                <div className="timeline-item">
+                  <div className="timeline-dot"></div>
+                  <div className="timeline-content">
+                    <span className="timeline-date">2025 - 2026</span>
+                    <h3 className="timeline-title">영진직업전문학교 수료</h3>
+                    <p className="timeline-desc">
+                      생성형 AI 기반 UI/UX 디자인 <br />
+                      웹 앱 개발 컨텐츠 개발 과정
+                    </p>
+                  </div>
+                </div>
+                <div className="timeline-item">
+                  <div className="timeline-dot"></div>
+                  <div className="timeline-content">
+                    <span className="timeline-date">CURRENT STATUS</span>
+                    <h3 className="timeline-title">Creative Developer</h3>
+                    <p className="timeline-desc">Available for Collaboration</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -159,11 +178,10 @@ function App() {
           style={getPageStyle(1)}
         >
           <div className="page-header">
-            <span className="page-label">FILE NO. 002 / SPECIFICATIONS</span>
-            <div className="dossier-stamp" style={{ borderColor: 'var(--secondary)' }}>CLASSIFIED</div>
+            <span className="page-label">FILE NO. 002 </span>
           </div>
           <h2 className="page-title" style={{ marginBottom: '40px' }}>TECH SKILLS</h2>
-          <div className="skills-grid" ref={constraintsRef}>
+          <div className="skills-grid">
             {[
               { name: 'HTML5', icon: <FaHtml5 />, color: '#e34c26', desc: 'Semantic structure & SEO' },
               { name: 'CSS3', icon: <FaCss3Alt />, color: '#264de4', desc: 'Layout, Animations & Responsive' },
@@ -179,18 +197,17 @@ function App() {
                 key={`${resetKey}-${idx}`}
                 drag
                 dragConstraints={mainRef}
-                dragElastic={1}
                 dragMomentum={true}
-                whileDrag={{ scale: 1.1, zIndex: 100 }}
+                onDragStart={() => setHasMoved(true)}
+                whileDrag={{ scale: 1.1, zIndex: 3000 }}
                 animate={{ x: 0, y: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 15,
-                  bounceStiffness: 400,
-                  bounceDamping: 10,
-                  power: 0.5
+                dragTransition={{
+                  power: 0.4,           // Natural momentum
+                  timeConstant: 200,    // Smooth deceleration
+                  bounceStiffness: 300, // Softer bounce off walls
+                  bounceDamping: 20     // Stable landing
                 }}
+                dragElastic={0.8}      // Softer wall interaction to prevent glitching
                 style={{ cursor: 'grab' }}
               >
                 <div className="skill-report-icon" style={{ color: skill.color }}>
@@ -209,73 +226,69 @@ function App() {
           style={getPageStyle(2)}
         >
           <div className="page-header">
-            <span className="page-label">FILE NO. 003 / CASE_STUDIES</span>
-            <div className="dossier-stamp">ACTIVE PROJECTS</div>
+            <span className="page-label">FILE NO. 003 </span>
           </div>
           <h2 className="page-title" style={{ marginBottom: '40px' }}>WORK SAMPLES</h2>
-          <div className="projects-list" ref={workConstraintsRef}>
+          <div className="projects-list">
             {[
               {
                 title: 'Game Info Site',
                 desc: '반응형 웹 디자인을 적용한 게임 정보 제공 사이트',
                 live: 'https://tndi0622.github.io/Responsible_web/',
                 github: 'https://github.com/tndi0622/Responsible_web',
-                img: '/img/project1.png'
+                img: '/img/project1.png',
+                tech: ['HTML5', 'CSS3', 'JavaScript']
               },
               {
                 title: 'Horoscope Site',
                 desc: 'PHP/MySQL 기반 별자리 운세 애플리케이션',
                 live: 'https://random.dothome.co.kr/server/index.php',
                 github: 'https://github.com/tndi0622/test_server',
-                img: '/img/project2.png'
+                img: '/img/project2.png',
+                tech: ['PHP', 'MySQL', 'JavaScript']
               },
               {
                 title: 'Dokju (獨酒)',
                 desc: '일본 전통주 전문 E-commerce 플랫폼',
                 live: 'https://sake.dothome.co.kr/dokju/',
                 github: 'https://github.com/tndi0622/dokju',
-                img: '/img/project3.png'
+                img: '/img/project3.png',
+                tech: ['PHP', 'MySQL', 'HTML5', 'CSS3']
               },
               {
                 title: 'Farming Letter',
                 desc: 'Next.js 기반 게임 인사이트 뉴스레터',
                 live: 'https://farming-letter-vbm7.vercel.app/',
                 github: 'https://github.com/tndi0622/Farming_Letter',
-                img: '/img/project4.png'
+                img: '/img/project4.png',
+                tech: ['Next.js', 'React']
               },
               {
                 title: 'Eco Helper (에코도우미)',
                 desc: '지역별 맞춤형 쓰레기 배출 및 재활용 관리 서비스',
                 live: 'https://eco-henna-five.vercel.app/',
                 github: 'https://github.com/tndi0622/eco',
-                img: '/img/project5.png'
+                img: '/img/project5.png',
+                tech: ['React', 'TypeScript', 'Next.js']
               }
             ].map((project, idx) => (
-              <motion.div
+              <div
                 className="project-page-card"
-                key={`${resetKey}-${idx}`}
-                drag
-                dragConstraints={mainRef}
-                dragElastic={1}
-                dragMomentum={true}
-                whileDrag={{ scale: 1.1, zIndex: 100 }}
-                animate={{ x: 0, y: 0 }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 100,
-                  damping: 15,
-                  bounceStiffness: 400,
-                  bounceDamping: 10,
-                  power: 0.5
-                }}
-                style={{ cursor: 'grab' }}
+                key={idx}
               >
                 <div className="project-visual">
                   <img src={project.img} alt={project.title} />
                 </div>
-                <div>
+                <div className="project-content">
                   <h3>{project.title}</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '10px 0' }}>{project.desc}</p>
+                  <p className="project-desc">{project.desc}</p>
+
+                  <div className="project-tech-stack">
+                    {project.tech.map((t, i) => (
+                      <span key={i} className="tech-badge">{t}</span>
+                    ))}
+                  </div>
+
                   <div className="project-links">
                     <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn-project-link">
                       VIEW SITE <FaExternalLinkAlt size={12} />
@@ -285,7 +298,7 @@ function App() {
                     </a>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </motion.div>
@@ -296,8 +309,7 @@ function App() {
           style={getPageStyle(3)}
         >
           <div className="page-header">
-            <span className="page-label">FILE NO. 004 / FINAL_MEMO</span>
-            <div className="dossier-stamp" style={{ borderStyle: 'solid', color: 'var(--primary)' }}>URGENT</div>
+            <span className="page-label">FILE NO. 004 </span>
           </div>
           <div style={{ textAlign: 'center', marginTop: '50px' }}>
             <h2 className="page-title">GET IN TOUCH</h2>
@@ -306,10 +318,49 @@ function App() {
               <p style={{ color: 'var(--text-muted)' }}>새로운 프로젝트나 협업 제안은 언제든 환영합니다.</p>
               <div className="social-grid">
                 <a href="https://github.com/tndi0622" target="_blank" className="social-item"><FaGithub /></a>
-                <a href="mailto:tndi0622@naver.com" className="social-item"><FaEnvelope /></a>
+                <button
+                  className={`social-item icon-btn ${showCard ? 'active' : ''}`}
+                  onClick={() => setShowCard(!showCard)}
+                  title="View Business Card"
+                >
+                  <FaEnvelope />
+                </button>
                 <a href="#" className="social-item"><FaBlog /></a>
                 <a href="#" className="social-item"><FaInstagram /></a>
               </div>
+
+              <AnimatePresence>
+                {showCard && (
+                  <motion.div
+                    className="business-card-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setShowCard(false)}
+                  >
+                    <motion.div
+                      className="business-card"
+                      initial={{ scale: 0.5, y: 50, rotateX: 45 }}
+                      animate={{ scale: 1, y: 0, rotateX: 0 }}
+                      exit={{ scale: 0.5, y: 50, rotateX: 45 }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="card-top">
+                        <span className="card-logo">LGS</span>
+                        <span className="card-rank">CREATOR</span>
+                      </div>
+                      <div className="card-main">
+                        <h2 className="card-name">이광수</h2>
+                        <div className="card-info">
+                          <p><span>TEL.</span> 010 - 7979 - 4510</p>
+                          <p><span>E-MAIL.</span> tndi0622@naver.com</p>
+                        </div>
+                      </div>
+                      <div className="card-decoration"></div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             <div style={{ marginTop: '100px', opacity: 0.5, fontSize: '0.8rem', letterSpacing: '2px' }}>
               <p>&copy; 2026 ARCHIVE SYSTEM. ALL RIGHTS RESERVED.</p>
