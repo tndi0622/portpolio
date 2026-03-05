@@ -14,6 +14,7 @@ import {
   FaPhp,
   FaFigma
 } from 'react-icons/fa';
+import { SiFlutter, SiNextdotjs } from 'react-icons/si';
 import './App.css';
 
 function App() {
@@ -128,36 +129,24 @@ function App() {
           </div>
           <h2 className="page-title" style={{ marginBottom: '40px' }}>TECH SKILLS</h2>
           <div className="skills-grid">
-            <div className="skill-report-item">
-              <FaHtml5 className="skill-report-icon" style={{ color: '#e34c26' }} />
-              <h3>HTML5</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>Semantic structure & SEO</p>
-            </div>
-            <div className="skill-report-item">
-              <FaCss3Alt className="skill-report-icon" style={{ color: '#264de4' }} />
-              <h3>CSS3</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>Layout, Animations & Responsive</p>
-            </div>
-            <div className="skill-report-item">
-              <FaJs className="skill-report-icon" style={{ color: '#f7df1e' }} />
-              <h3>JavaScript</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>ES6+, Async, DOM Manipulation</p>
-            </div>
-            <div className="skill-report-item">
-              <FaReact className="skill-report-icon" style={{ color: '#61dbfb' }} />
-              <h3>React</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>Component hooks, SPA state management</p>
-            </div>
-            <div className="skill-report-item">
-              <FaPhp className="skill-report-icon" style={{ color: '#8993be' }} />
-              <h3>PHP</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>Server-side logic & MySQL integration</p>
-            </div>
-            <div className="skill-report-item">
-              <FaFigma className="skill-report-icon" style={{ color: '#f24e1e' }} />
-              <h3>Figma</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>Prototyping & Design system</p>
-            </div>
+            {[
+              { name: 'HTML5', icon: <FaHtml5 />, color: '#e34c26', desc: 'Semantic structure & SEO' },
+              { name: 'CSS3', icon: <FaCss3Alt />, color: '#264de4', desc: 'Layout, Animations & Responsive' },
+              { name: 'JavaScript', icon: <FaJs />, color: '#f7df1e', desc: 'ES6+, Async, DOM Manipulation' },
+              { name: 'React', icon: <FaReact />, color: '#61dbfb', desc: 'Component hooks, SPA state management' },
+              { name: 'Next.js', icon: <SiNextdotjs />, color: '#000000', desc: 'SSR, Static Site Generation & API Routes' },
+              { name: 'Flutter', icon: <SiFlutter />, color: '#02569B', desc: 'Cross-platform Mobile/Web Development' },
+              { name: 'PHP', icon: <FaPhp />, color: '#8993be', desc: 'Server-side logic & MySQL integration' },
+              { name: 'Figma', icon: <FaFigma />, color: '#f24e1e', desc: 'Prototyping & Design system' },
+            ].map((skill, idx) => (
+              <div className="skill-report-item" key={idx}>
+                <div className="skill-report-icon" style={{ color: skill.color }}>
+                  {skill.icon}
+                </div>
+                <h3>{skill.name}</h3>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>{skill.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
 
