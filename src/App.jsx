@@ -18,14 +18,41 @@ import { SiFlutter, SiNextdotjs } from 'react-icons/si';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState(0);
-
   const pages = [
     { id: 'profile', label: 'PROFILE' },
     { id: 'skills', label: 'SKILLS' },
     { id: 'work', label: 'WORK' },
     { id: 'contact', label: 'CONTACT' }
   ];
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = pages.length;
+
+  // Handle keyboard navigation
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        setCurrentPage((prev) => Math.max(prev - 1, 0));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [totalPages]);
+
+  const handleDragEnd = (event, info) => {
+    const threshold = 50; // minimum distance for a swipe
+    if (info.offset.x < -threshold) {
+      // Swiped left -> next page
+      setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+    } else if (info.offset.x > threshold) {
+      // Swiped right -> previous page
+      setCurrentPage((prev) => Math.max(prev - 1, 0));
+    }
+  };
+
 
   const getPageStyle = (index) => {
     const diff = index - currentPage;
@@ -74,7 +101,14 @@ function App() {
       {/* Pages Stack */}
       <div className="pages-stack">
         {/* Page 1: Profile */}
-        <div className="dossier-page" style={getPageStyle(0)}>
+        <motion.div
+          className="dossier-page"
+          style={getPageStyle(0)}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+        >
           <div className="page-header">
             <span className="page-label">FILE NO. 001 / PERSONNEL</span>
             <div className="dossier-stamp">APPROVED</div>
@@ -119,10 +153,17 @@ function App() {
               </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Page 2: Skills */}
-        <div className="dossier-page" style={getPageStyle(1)}>
+        <motion.div
+          className="dossier-page"
+          style={getPageStyle(1)}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+        >
           <div className="page-header">
             <span className="page-label">FILE NO. 002 / SPECIFICATIONS</span>
             <div className="dossier-stamp" style={{ borderColor: 'var(--secondary)' }}>CLASSIFIED</div>
@@ -148,10 +189,17 @@ function App() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Page 3: Work */}
-        <div className="dossier-page" style={getPageStyle(2)}>
+        <motion.div
+          className="dossier-page"
+          style={getPageStyle(2)}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+        >
           <div className="page-header">
             <span className="page-label">FILE NO. 003 / CASE_STUDIES</span>
             <div className="dossier-stamp">ACTIVE PROJECTS</div>
@@ -214,10 +262,17 @@ function App() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Page 4: Contact */}
-        <div className="dossier-page" style={getPageStyle(3)}>
+        <motion.div
+          className="dossier-page"
+          style={getPageStyle(3)}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.2}
+          onDragEnd={handleDragEnd}
+        >
           <div className="page-header">
             <span className="page-label">FILE NO. 004 / FINAL_MEMO</span>
             <div className="dossier-stamp" style={{ borderStyle: 'solid', color: 'var(--primary)' }}>URGENT</div>
@@ -238,9 +293,9 @@ function App() {
               <p>&copy; 2026 ARCHIVE SYSTEM. ALL RIGHTS RESERVED.</p>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </div >
+    </div >
   );
 }
 
