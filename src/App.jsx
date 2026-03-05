@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaExternalLinkAlt,
@@ -27,6 +27,8 @@ function App() {
 
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = pages.length;
+  const constraintsRef = useRef(null);
+  const workConstraintsRef = useRef(null);
 
   // Handle keyboard navigation
   React.useEffect(() => {
@@ -169,7 +171,7 @@ function App() {
             <div className="dossier-stamp" style={{ borderColor: 'var(--secondary)' }}>CLASSIFIED</div>
           </div>
           <h2 className="page-title" style={{ marginBottom: '40px' }}>TECH SKILLS</h2>
-          <div className="skills-grid">
+          <div className="skills-grid" ref={constraintsRef}>
             {[
               { name: 'HTML5', icon: <FaHtml5 />, color: '#e34c26', desc: 'Semantic structure & SEO' },
               { name: 'CSS3', icon: <FaCss3Alt />, color: '#264de4', desc: 'Layout, Animations & Responsive' },
@@ -180,13 +182,21 @@ function App() {
               { name: 'PHP', icon: <FaPhp />, color: '#8993be', desc: 'Server-side logic & MySQL integration' },
               { name: 'Figma', icon: <FaFigma />, color: '#f24e1e', desc: 'Prototyping & Design system' },
             ].map((skill, idx) => (
-              <div className="skill-report-item" key={idx}>
+              <motion.div
+                className="skill-report-item"
+                key={idx}
+                drag
+                dragConstraints={constraintsRef}
+                whileDrag={{ scale: 1.1, zIndex: 100 }}
+                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+                style={{ cursor: 'grab' }}
+              >
                 <div className="skill-report-icon" style={{ color: skill.color }}>
                   {skill.icon}
                 </div>
                 <h3>{skill.name}</h3>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px' }}>{skill.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -205,7 +215,7 @@ function App() {
             <div className="dossier-stamp">ACTIVE PROJECTS</div>
           </div>
           <h2 className="page-title" style={{ marginBottom: '40px' }}>WORK SAMPLES</h2>
-          <div className="projects-list">
+          <div className="projects-list" ref={workConstraintsRef}>
             {[
               {
                 title: 'Game Info Site',
@@ -243,7 +253,15 @@ function App() {
                 img: '/img/project5.png'
               }
             ].map((project, idx) => (
-              <div className="project-page-card" key={idx}>
+              <motion.div
+                className="project-page-card"
+                key={idx}
+                drag
+                dragConstraints={workConstraintsRef}
+                whileDrag={{ scale: 1.02, zIndex: 100 }}
+                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+                style={{ cursor: 'grab' }}
+              >
                 <div className="project-visual">
                   <img src={project.img} alt={project.title} />
                 </div>
@@ -259,7 +277,7 @@ function App() {
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
