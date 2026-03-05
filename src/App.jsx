@@ -12,7 +12,8 @@ import {
   FaJs,
   FaReact,
   FaPhp,
-  FaFigma
+  FaFigma,
+  FaUndo
 } from 'react-icons/fa';
 import { SiFlutter, SiNextdotjs } from 'react-icons/si';
 import './App.css';
@@ -26,9 +27,13 @@ function App() {
   ];
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [resetKey, setResetKey] = useState(0);
   const totalPages = pages.length;
-  const constraintsRef = useRef(null);
-  const workConstraintsRef = useRef(null);
+  const mainRef = useRef(null);
+
+  const handleReset = () => {
+    setResetKey(prev => prev + 1);
+  };
 
   // Handle keyboard navigation
   React.useEffect(() => {
@@ -44,16 +49,6 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [totalPages]);
 
-  const handleDragEnd = (event, info) => {
-    const threshold = 50; // minimum distance for a swipe
-    if (info.offset.x < -threshold) {
-      // Swiped left -> next page
-      setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
-    } else if (info.offset.x > threshold) {
-      // Swiped right -> previous page
-      setCurrentPage((prev) => Math.max(prev - 1, 0));
-    }
-  };
 
 
   const getPageStyle = (index) => {
@@ -86,7 +81,12 @@ function App() {
   };
 
   return (
-    <div className="dossier-container">
+    <div className="dossier-container" ref={mainRef}>
+      {/* Reset Button */}
+      <button className="reset-btn" onClick={handleReset} title="Reset Layout">
+        <FaUndo /> <span>RESET CARDS</span>
+      </button>
+
       {/* Index Tabs */}
       <div className="index-tabs">
         {pages.map((page, index) => (
@@ -106,10 +106,6 @@ function App() {
         <motion.div
           className="dossier-page"
           style={getPageStyle(0)}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
         >
           <div className="page-header">
             <span className="page-label">FILE NO. 001 / PERSONNEL</span>
@@ -161,10 +157,6 @@ function App() {
         <motion.div
           className="dossier-page"
           style={getPageStyle(1)}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
         >
           <div className="page-header">
             <span className="page-label">FILE NO. 002 / SPECIFICATIONS</span>
@@ -184,15 +176,20 @@ function App() {
             ].map((skill, idx) => (
               <motion.div
                 className="skill-report-item"
-                key={idx}
+                key={`${resetKey}-${idx}`}
                 drag
+                dragConstraints={mainRef}
+                dragElastic={1}
                 dragMomentum={true}
-                dragElastic={0.5}
                 whileDrag={{ scale: 1.1, zIndex: 100 }}
-                dragTransition={{
-                  power: 0.2,
-                  timeConstant: 200,
-                  modifyTarget: target => target // No snapping
+                animate={{ x: 0, y: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 15,
+                  bounceStiffness: 400,
+                  bounceDamping: 10,
+                  power: 0.5
                 }}
                 style={{ cursor: 'grab' }}
               >
@@ -210,10 +207,6 @@ function App() {
         <motion.div
           className="dossier-page"
           style={getPageStyle(2)}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
         >
           <div className="page-header">
             <span className="page-label">FILE NO. 003 / CASE_STUDIES</span>
@@ -260,14 +253,20 @@ function App() {
             ].map((project, idx) => (
               <motion.div
                 className="project-page-card"
-                key={idx}
+                key={`${resetKey}-${idx}`}
                 drag
+                dragConstraints={mainRef}
+                dragElastic={1}
                 dragMomentum={true}
-                dragElastic={0.5}
-                whileDrag={{ scale: 1.02, zIndex: 100 }}
-                dragTransition={{
-                  power: 0.3,
-                  timeConstant: 300
+                whileDrag={{ scale: 1.1, zIndex: 100 }}
+                animate={{ x: 0, y: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 15,
+                  bounceStiffness: 400,
+                  bounceDamping: 10,
+                  power: 0.5
                 }}
                 style={{ cursor: 'grab' }}
               >
@@ -295,10 +294,6 @@ function App() {
         <motion.div
           className="dossier-page"
           style={getPageStyle(3)}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.2}
-          onDragEnd={handleDragEnd}
         >
           <div className="page-header">
             <span className="page-label">FILE NO. 004 / FINAL_MEMO</span>
