@@ -277,6 +277,22 @@ body {
   gap: 15px;
 }
 
+.project-links {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+.github-link {
+  color: var(--secondary);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.github-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 .contact-memo {
   max-width: 600px;
   margin: 0 auto;

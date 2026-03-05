@@ -169,46 +169,61 @@ function App() {
           </div>
           <h2 className="page-title" style={{ marginBottom: '40px' }}>WORK SAMPLES</h2>
           <div className="projects-list">
-            <div className="project-page-card">
-              <div className="project-visual">
-                <img src="/img/project1.png" alt="Game Info Site" />
+            {[
+              {
+                title: 'Game Info Site',
+                desc: '반응형 웹 디자인을 적용한 게임 정보 제공 사이트',
+                live: 'https://tndi0622.github.io/Responsible_web/',
+                github: 'https://github.com/tndi0622/Responsible_web',
+                img: '/img/project1.png'
+              },
+              {
+                title: 'Horoscope Site',
+                desc: 'PHP/MySQL 기반 별자리 운세 애플리케이션',
+                live: 'https://random.dothome.co.kr/server/index.php',
+                github: 'https://github.com/tndi0622/test_server',
+                img: '/img/project2.png'
+              },
+              {
+                title: 'Dokju (獨酒)',
+                desc: '일본 전통주 전문 E-commerce 플랫폼',
+                live: 'https://sake.dothome.co.kr/dokju/',
+                github: 'https://github.com/tndi0622/dokju',
+                img: '/img/project3.png'
+              },
+              {
+                title: 'Farming Letter',
+                desc: 'Next.js 기반 게임 인사이트 뉴스레터',
+                live: 'https://farming-letter-vbm7.vercel.app/',
+                github: 'https://github.com/tndi0622/Farming_Letter',
+                img: '/img/project4.png'
+              },
+              {
+                title: 'Eco Helper (에코도우미)',
+                desc: '지역별 맞춤형 쓰레기 배출 및 재활용 관리 서비스',
+                live: 'https://eco-henna-five.vercel.app/',
+                github: 'https://github.com/tndi0622/eco',
+                img: '/img/project5.png'
+              }
+            ].map((project, idx) => (
+              <div className="project-page-card" key={idx}>
+                <div className="project-visual">
+                  <img src={project.img} alt={project.title} />
+                </div>
+                <div>
+                  <h3>{project.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '10px 0' }}>{project.desc}</p>
+                  <div className="project-links">
+                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn-project-link">
+                      VIEW SITE <FaExternalLinkAlt size={12} />
+                    </a>
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-project-link github-link">
+                      CODE <FaGithub size={14} />
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3>Game Info Site</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '10px 0' }}>반응형 웹 디자인을 적용한 게임 정보 제공 사이트</p>
-                <a href="https://tndi0622.github.io/Responsible_web/" target="_blank" className="btn-project-link">VIEW CASE <FaExternalLinkAlt size={12} /></a>
-              </div>
-            </div>
-            <div className="project-page-card">
-              <div className="project-visual">
-                <img src="/img/project2.png" alt="Horoscope Site" />
-              </div>
-              <div>
-                <h3>Horoscope Site</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '10px 0' }}>PHP/MySQL 기반 별자리 운세 애플리케이션</p>
-                <a href="https://random.dothome.co.kr/server/index.php" target="_blank" className="btn-project-link">VIEW CASE <FaExternalLinkAlt size={12} /></a>
-              </div>
-            </div>
-            <div className="project-page-card">
-              <div className="project-visual">
-                <img src="/img/project3.png" alt="Dokju Traditional Liquor" />
-              </div>
-              <div>
-                <h3>Dokju (獨酒)</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '10px 0' }}>일본 전통주 전문 E-commerce 플랫폼</p>
-                <a href="https://sake.dothome.co.kr/dokju/" target="_blank" className="btn-project-link">VIEW CASE <FaExternalLinkAlt size={12} /></a>
-              </div>
-            </div>
-            <div className="project-page-card">
-              <div className="project-visual">
-                <img src="/img/project4.png" alt="Farming Letter" />
-              </div>
-              <div>
-                <h3>Farming Letter</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: '10px 0' }}>Next.js 기반 게임 인사이트 뉴스레터</p>
-                <a href="https://farming-letter-vbm7.vercel.app/" target="_blank" className="btn-project-link">VIEW CASE <FaExternalLinkAlt size={12} /></a>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
